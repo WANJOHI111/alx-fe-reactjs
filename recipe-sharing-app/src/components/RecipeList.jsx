@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useRecipeStore } from '../recipeStore';
 
 function RecipeList() {
@@ -10,12 +11,10 @@ function RecipeList() {
         <p>No recipes yet. Add one!</p>
       ) : (
         recipes.map((recipe) => (
-          <div
-            key={recipe.id}
-            style={{ border: '1px solid #ddd', padding: '10px', margin: '10px 0' }}
-          >
+          <div key={recipe.id} style={{ marginBottom: '10px' }}>
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
+            <Link to={`/recipes/${recipe.id}`}>View Details</Link>
           </div>
         ))
       )}
@@ -24,3 +23,4 @@ function RecipeList() {
 }
 
 export default RecipeList;
+
