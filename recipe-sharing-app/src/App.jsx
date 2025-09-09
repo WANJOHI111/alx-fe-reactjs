@@ -5,6 +5,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
+import Navbar from "./components/Navbar";
 import './App.css'
 
 function App() {
@@ -12,6 +13,32 @@ function App() {
 
   return (
     <>
+       <div>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/add" element={<AddRecipe />} />
+      </Routes>
+    </div>
+     <Router>
+      <div style={{ padding: '20px' }}>
+        <h1>Recipe Sharing App</h1>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <AddRecipeForm />
+                <RecipeList />
+              </>
+            }
+          />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
+        </Routes>
+      </div>
+    </Router>
 
     <div style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1>Recipe Sharing App</h1>
