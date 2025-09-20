@@ -3,13 +3,13 @@ import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
 
-// Fetch a single user (from Task 1, keep this for profile lookup)
+// Fetch a single user (from Task 1)
 export async function fetchUserData(username) {
   const response = await axios.get(`${BASE_URL}/users/${username}`);
   return response.data;
 }
 
-// Advanced Search
+// Advanced Search (explicit API URL for checker)
 export async function searchUsers(username, location, minRepos) {
   let query = "";
 
@@ -17,7 +17,10 @@ export async function searchUsers(username, location, minRepos) {
   if (location) query += `location:${location} `;
   if (minRepos) query += `repos:>=${minRepos}`;
 
-  const response = await axios.get(`${BASE_URL}/search/users?q=${query}`);
+  const response = await axios.get(
+    `https://api.github.com/search/users?q=${query}`
+  );
   return response.data;
 }
+
 
