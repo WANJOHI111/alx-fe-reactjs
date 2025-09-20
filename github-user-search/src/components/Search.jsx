@@ -1,6 +1,6 @@
 // src/components/Search.jsx
 import { useState } from "react";
-import { searchUsers } from "../services/githubService";
+import { searchUsers, fetchUserData } from "../services/githubService";
 
 function Search() {
   const [username, setUsername] = useState("");
@@ -17,8 +17,22 @@ function Search() {
     setUsers([]);
 
     try {
+      // Step 1: Use searchUsers for initial results
       const data = await searchUsers(username, location, minRepos);
-      setUsers(data.items || []);
+
+      // Step 2: For each result, fetch detailed user info
+      const detailedUsers = await Promise.all(
+        data.items.map(async (user) => {
+          try {
+            const details = await fetchUserData(user.login);
+            return { ...user, ...details };
+          } catch {
+            return user; // fallback if details fail
+          }
+        })
+      );
+
+      setUsers(detailedUsers);
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -84,6 +98,14 @@ function Search() {
             />
             <div>
               <h2 className="text-lg font-semibold">{user.login}</h2>
+              {user.location && (
+                <p className="text-sm text-gray-600">📍 {user.location}</p>
+              )}
+              {user.public_repos !== undefined && (
+                <p className="text-sm text-gray-600">
+                  📦 {user.public_repos} repos
+                </p>
+              )}
               <a
                 href={user.html_url}
                 target="_blank"
@@ -101,4 +123,5 @@ function Search() {
 }
 
 export default Search;
+
 
