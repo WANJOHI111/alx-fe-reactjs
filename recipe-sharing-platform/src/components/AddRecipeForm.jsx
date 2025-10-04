@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
@@ -11,9 +11,9 @@ const AddRecipeForm = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = "Title is required";
     if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required";
-    if (!instructions.trim()) newErrors.instructions = "Instructions are required";
+    if (!steps.trim()) newErrors.steps = "Steps are required";
 
-    // Optional: ensure ingredients list has at least 2 items
+    // Optional: check at least 2 ingredients
     const ingredientList = ingredients.split(",").map((i) => i.trim());
     if (ingredientList.length < 2)
       newErrors.ingredients = "Please include at least 2 ingredients";
@@ -29,19 +29,17 @@ const AddRecipeForm = () => {
         id: Date.now(),
         title,
         ingredients: ingredients.split(",").map((i) => i.trim()),
-        instructions: instructions.split("\n").map((step) => step.trim()),
+        steps: steps.split("\n").map((step) => step.trim()),
       };
 
       console.log("Recipe submitted:", newRecipe);
 
-      // Reset form after success
       setTitle("");
       setIngredients("");
-      setInstructions("");
+      setSteps("");
       setErrors({});
       setSuccess(true);
 
-      // Hide success after 3s
       setTimeout(() => setSuccess(false), 3000);
     }
   };
@@ -98,22 +96,22 @@ const AddRecipeForm = () => {
             )}
           </div>
 
-          {/* Instructions Field */}
+          {/* Steps Field */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Preparation Steps <span className="text-sm text-gray-400">(one per line)</span>
             </label>
             <textarea
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                errors.instructions ? "border-red-500" : "border-gray-300"
+                errors.steps ? "border-red-500" : "border-gray-300"
               }`}
               rows="4"
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
+              value={steps}
+              onChange={(e) => setSteps(e.target.value)}
               placeholder="Step 1: Mix ingredients...\nStep 2: Bake for 30 minutes..."
             ></textarea>
-            {errors.instructions && (
-              <p className="text-red-500 text-sm mt-1">{errors.instructions}</p>
+            {errors.steps && (
+              <p className="text-red-500 text-sm mt-1">{errors.steps}</p>
             )}
           </div>
 
@@ -131,3 +129,4 @@ const AddRecipeForm = () => {
 };
 
 export default AddRecipeForm;
+
