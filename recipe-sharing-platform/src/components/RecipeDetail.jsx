@@ -33,29 +33,33 @@ const RecipeDetail = () => {
 
           <p className="text-gray-700 mb-6">{recipe.summary}</p>
 
-          <div className="border-t pt-4">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-              Ingredients
-            </h2>
-            <ul className="list-disc list-inside text-gray-600 space-y-1">
-              <li>1 tbsp olive oil</li>
-              <li>2 cloves garlic, minced</li>
-              <li>Salt and pepper to taste</li>
-              <li>Other key ingredients...</li>
-            </ul>
-          </div>
+          {/* Ingredients Section */}
+          {recipe.ingredients && (
+            <div className="border-t pt-4">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                Ingredients
+              </h2>
+              <ul className="list-disc list-inside text-gray-600 space-y-1">
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className="border-t pt-4 mt-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-              Cooking Instructions
-            </h2>
-            <ol className="list-decimal list-inside text-gray-600 space-y-2">
-              <li>Preheat your pan or oven.</li>
-              <li>Add ingredients step by step.</li>
-              <li>Simmer until cooked and aromatic.</li>
-              <li>Serve and enjoy!</li>
-            </ol>
-          </div>
+          {/* Instructions Section */}
+          {recipe.instructions && (
+            <div className="border-t pt-4 mt-6">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                Cooking Instructions
+              </h2>
+              <ol className="list-decimal list-inside text-gray-600 space-y-2">
+                {recipe.instructions.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
 
           <div className="mt-8">
             <Link
@@ -72,3 +76,4 @@ const RecipeDetail = () => {
 };
 
 export default RecipeDetail;
+
